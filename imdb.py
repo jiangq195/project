@@ -166,5 +166,33 @@ def show_train_history(train_history):
     plt.show()
 
 
+def gen_predict_data(path):
+    sent = prepross(path)
+    x_train, t_train = imdb_load("train")
+    token = text.Tokenizer(num_words=max_features)
+    token.fit_on_texts(x_train)
+    x = token.texts_to_sequences([sent])
+    x = sequence.pad_sequences(x, maxlen=maxlen)
+
+    return x
+
+
+RESULT = {1: 'pos', 0: 'neg'}
+
+
+def predict(path):
+    x = gen_predict_data(path)
+    model = keras.models.load_model("./models/demo_imdb_rnn.h5")
+    y = model.predict(x)
+    print(y)
+    y = model.predict_classes(x)
+    print(y)
+    print(RESULT[y[0][0]])
+
+
+train()
+
+predict(r"data/aclImdb/test/neg/0_2.txt")
+predict(r"data/aclImdb/test/pos/0_10.txt")
 
 imdb_load_data()

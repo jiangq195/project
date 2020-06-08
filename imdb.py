@@ -116,12 +116,12 @@ def train():
     train_history = model.fit(x=x_train,
                               y=y_train,
                               batch_size=128,
-                              epochs=1,
+                              epochs=10,
                               validation_data=(x_test, y_test))
     show_train_history(train_history)
 
     # 模型保存
-    model.save(filepath="./models/model_imdb_rnn.h5")
+    model.save(filepath="./models/demo_imdb_rnn.h5")
     # 模型保存一分图片
     plot_model(model=model, to_file="./models/demo_imdb_rnn.png",
                show_layer_names=True, show_shapes=True)
